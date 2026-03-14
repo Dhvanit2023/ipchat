@@ -12,7 +12,7 @@ const io = new Server(server)
 app.use(express.json())
 app.use(express.static("public"))
 
-mongoose.connect("mongodb+srv://patelkanostudent_db_user:<pass>@kano.r6ypetl.mongodb.net/?appName=kano")
+mongoose.connect("mongodb+srv://patelkanostudent_db_user:Gkq4NiPhdz8QsuoP@kano.r6ypetl.mongodb.net/?appName=kano")
 
 // ================= USERS =================
 
