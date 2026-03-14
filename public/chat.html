@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Lab Chat</title>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+}
+
+.main{
+display:flex;
+height:100vh;
+}
+
+.users{
+width:220px;
+border-right:1px solid #ccc;
+padding:10px;
+background:#f4f4f4;
+overflow-y:auto;
+}
+
+.users ul{
+list-style:none;
+padding:0;
+}
+
+.users li{
+padding:6px;
+border-bottom:1px solid #ddd;
+}
+
+.chat{
+flex:1;
+display:flex;
+flex-direction:column;
+}
+
+#messages{
+flex:1;
+padding:10px;
+overflow-y:auto;
+background:#fafafa;
+}
+
+.message{
+margin-bottom:10px;
+}
+
+.message img{
+border-radius:6px;
+}
+
+pre{
+background:#1e1e1e;
+color:#00ff9d;
+padding:10px;
+border-radius:6px;
+overflow:auto;
+white-space:pre-wrap;
+word-break:break-word;
+}
+
+.copyBtn{
+margin:4px 0;
+cursor:pointer;
+padding:4px 8px;
+}
+
+.send{
+display:flex;
+gap:6px;
+padding:10px;
+border-top:1px solid #ccc;
+}
+
+.send input{
+flex:1;
+padding:8px;
+}
+
+.send button{
+padding:8px 12px;
+cursor:pointer;
+}
+
+#emojiBox,#gifBox,#stickerBox{
+position:absolute;
+bottom:70px;
+background:white;
+border:1px solid #ccc;
+padding:10px;
+display:none;
+max-height:200px;
+overflow:auto;
+box-shadow:0 2px 6px rgba(0,0,0,0.2);
+}
+
+#emojiBox span{
+font-size:22px;
+margin:4px;
+cursor:pointer;
+}
+
+#gifBox img,#stickerBox img{
+margin:4px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="main">
+
+<div class="users">
+
+<h3>Online Users</h3>
+
+<ul id="userlist"></ul>
+<button onclick="logout()">Logout</button>
+</div>
+
+<div class="chat">
+
+<div id="messages"></div>
+
+<div id="typing"></div>
+
+<div class="send">
+
+<button onclick="toggleEmoji()">😊</button>
+<button onclick="toggleGIF()">GIF</button>
+<button onclick="toggleSticker()">🧩</button>
+
+<input id="msg" placeholder="Type message or paste code">
+
+<button onclick="send()">Send</button>
+
+</div>
+
+<div id="emojiBox"></div>
+<div id="gifBox"></div>
+<div id="stickerBox"></div>
+
+</div>
+
+</div>
+
+<script src="chat.js"></script>
+
+</body>
+</html>

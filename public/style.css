@@ -1,0 +1,43 @@
+body{
+margin:0;
+font-family:Arial;
+}
+
+.main{
+display:flex;
+height:100vh;
+}
+
+.users{
+width:200px;
+border-right:1px solid #ccc;
+padding:10px;
+background:#f4f4f4;
+}
+
+.chat{
+flex:1;
+display:flex;
+flex-direction:column;
+}
+
+#messages{
+flex:1;
+overflow:auto;
+padding:10px;
+}
+
+.send{
+display:flex;
+border-top:1px solid #ccc;
+}
+
+.send input{
+flex:1;
+padding:10px;
+border:none;
+}
+
+.send button{
+width:100px;
+}

@@ -1,0 +1,29 @@
+<h2>Register</h2>
+
+<input id="u" placeholder="username">
+<input id="p" type="password" placeholder="password">
+
+<button onclick="register()">Register</button>
+
+<p><a href="login.html">Login</a></p>
+
+<script>
+
+async function register(){
+
+let username=u.value
+let password=p.value
+
+await fetch("/register",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({username,password})
+})
+
+alert("registered")
+
+location="login.html"
+
+}
+
+</script>
