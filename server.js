@@ -80,6 +80,7 @@ res.send("ok")
 
 })
 // ================= FILE UPLOAD =================
+// ================= FILE UPLOAD =================
 
 const storage = multer.diskStorage({
 destination:"public/uploads/",
@@ -88,11 +89,63 @@ cb(null,Date.now()+"_"+file.originalname)
 }
 })
 
-const upload = multer({storage})
+const upload = multer({
+storage,
+limits:{ fileSize:10*1024*1024 } // 10MB
+})
 
 app.post("/upload",upload.single("file"),(req,res)=>{
-res.send({url:"/uploads/"+req.file.filename})
+
+if(!req.file){
+return res.status(400).send("Upload failed")
+}
+
+res.send({
+url:"/uploads/"+req.file.filename,
+name:req.file.originalname
 })
+
+})
+// ================= AUTO DELETE OLD FILES =================
+
+const fs = require("fs")
+
+setInterval(()=>{
+
+const folder = path.join(__dirname,"public/uploads")
+
+fs.readdir(folder,(err,files)=>{
+
+if(err) return
+
+files.forEach(file=>{
+
+const filePath = path.join(folder,file)
+
+fs.stat(filePath,(err,stats)=>{
+
+if(err) return
+
+const age = Date.now() - stats.mtimeMs
+const limit = 24*60*60*1000 // 24 hours
+
+if(age > limit){
+
+fs.unlink(filePath,err=>{
+if(!err){
+console.log("Deleted old upload:",file)
+}
+})
+
+}
+
+})
+
+})
+
+})
+
+},60*60*1000) // check every 1 hour
 
 // ================= SOCKET =================
 
@@ -172,6 +225,8 @@ io.to(r).emit("system",{msg:u+" left",color:"red"})
 })
 
 })
+
+
 
 server.listen(3000,()=>{
 
