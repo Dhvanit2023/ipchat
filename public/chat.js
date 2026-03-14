@@ -20,8 +20,9 @@ async function send(){
 
 let message = msg.value.trim()
 let file = document.getElementById("fileInput").files[0]
+let loader = document.getElementById("uploadLoader")
 
-// file upload
+// FILE UPLOAD
 if(file){
 
 if(file.size > 10*1024*1024){
@@ -29,8 +30,13 @@ alert("File must be under 10MB")
 return
 }
 
+// show loader
+loader.style.display = "block"
+
 let form = new FormData()
 form.append("file",file)
+
+try{
 
 let res = await fetch("/upload",{
 method:"POST",
@@ -46,10 +52,17 @@ message:data.url
 })
 
 document.getElementById("fileInput").value=""
+
+}catch(err){
+alert("Upload failed")
+}
+
+loader.style.display = "none"
+
 return
 }
 
-// normal message
+// NORMAL MESSAGE
 if(!message) return
 
 socket.emit("chat",{room,username,message})
@@ -57,7 +70,6 @@ socket.emit("chat",{room,username,message})
 msg.value=""
 
 }
-
 
 // ================= MESSAGE RENDER =================
 function renderMessage(usernameText,messageText){
